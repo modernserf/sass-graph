@@ -16,10 +16,17 @@ function resolveSassPath(sassPath, loadPaths) {
     if (fs.existsSync(scssPath)) {
       return scssPath;
     }
+    if (fs.existsSync(scssPath.replace('scss','sass'))) {
+      return scssPath.replace('scss','sass');
+    }
+
     // special case for _partials
     var partialPath = path.join(path.dirname(scssPath), "_" + path.basename(scssPath));
     if (fs.existsSync(partialPath)) {
-      return partialPath
+      return partialPath;
+    }
+    if (fs.existsSync(partialPath.replace('scss','sass'))) {
+      return partialPath.replace('scss','sass');
     }
   }
   var errMsg = "File to import not found or unreadable: " + sassPath;
